@@ -87,6 +87,15 @@ DATABASES = {
         'PORT': '50092',  # You can specify the port if PostgreSQL is running on a non-default port
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'gym_db',
+#         'USER': 'root',
+#         'PASSWORD': '7866',
+#         'HOST': 'localhost',
+#     }
+# }
 
 
 # Password validation
