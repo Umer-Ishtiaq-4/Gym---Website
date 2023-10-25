@@ -1,0 +1,87 @@
+{% extends 'gym/base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    .navbar {
+        position: static;
+        transform: none !important;
+    }
+
+    .alert {
+        color: black !important;
+        background: orange;
+        padding: 10px;
+        border-radius: 1px;
+        width: 100%;
+        height: 50px;
+        display: flex;
+        justify-content: start;
+        font-weight: 500;
+        margin-top: 5px;
+    }
+</style>
+
+<div id="signup" class="signup">
+    <div class="container">
+        <div class="vertical-100px"></div>
+        <div class="signup-box">
+
+            <h2 class="heading-h2 sign">Burn Muscles Today</h2>
+            <div class="form-block w-form">
+                <form action="{% url 'register-page' %}" method="POST">
+                    {% csrf_token %}
+                    <!-- Email Input -->
+                    <div class="columns w-row">
+                        <div class="w-col w-col-12">
+                            <input type="email" class="input w-input" name="email" placeholder="Email Address"
+                                required />
+                            <input type="text" class="input w-input" maxlength="150" name="username"
+                                placeholder="Choose a Username" required />
+                        </div>
+                    </div>
+                    <!-- Username and Password -->
+                    <div class="w-row">
+                        <!-- <div class="w-col w-col-6">
+                        </div> -->
+                        <div class="w-col w-col-6">
+                            <input type="password" class="input w-input" name="password1" placeholder="Enter Password"
+                                required />
+                        </div>
+                        <div class="w-col w-col-6">
+                            <input type="password" class="input w-input" name="password2"
+                                placeholder="Enter Password Again" required />
+                        </div>
+                    </div>
+                    <div class="form-btn-holder">
+                        <input type="submit" value="Join & Get Wild" class="submit-button w-button" />
+                    </div>
+                    <div class="form-login">Already have an account? <a href="{% url 'login-page' %}"
+                            class="login-link">Login</a></div>
+                    {% for message in messages %}
+                    {% if message %}
+                    <div class="alert">
+
+                        {{ message }}
+
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                    <p class="form-legal">
+                        All memberships and plans automatically renew for a recurring monthly fee of $45.95 unless
+                        canceled. Members are free to <a href="#" class="form-legal-link">cancel</a> at any time. By
+                        subscribing you agree to the <a href="#" class="form-legal-link">Terms & Conditions</a> and <a
+                            href="#" class="form-legal-link">Privacy Policy</a>.
+                    </p>
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+</script>
+{% endblock content %}

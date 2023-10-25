@@ -1,0 +1,51 @@
+{% extends 'gym/base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    .navbar{
+        position: static;
+        transform: none !important;
+    }
+</style>
+<div id="signup" class="login">
+    <div class="container">
+        <div class="vertical-100px"></div>
+        <div class="signup-box">
+            <h2 class="heading-h2 sign">Enter Your Credentials</h2>
+            <div class="form-block">
+                <form  action="{% url 'login-page' %}" method="POST">
+                    {% csrf_token %}
+                    <input 
+                    type="email" class="input w-input"
+                    name="email" placeholder="Enter Mail"
+                    />
+                    <input 
+                    type="password" class="input w-input" 
+                    name="password" placeholder="password" 
+                    />
+                    <div class="form-btn-holder">
+                        <input 
+                        type="submit" class="submit-button w-button" 
+                        />
+                    </div>
+                    {% for message in messages %}
+                        {% if message %}
+                            
+                            {{ message }}
+                        {% endif %}
+                    {% endfor %}
+                </form>
+                <div class="form-login">Don&#x27;t have an account? <a href="{% url 'register-page' %}"
+                        class="login-link">Register</a></div>
+                <p class="form-legal">All memberships and plans automatically renew for a recurring monthly
+                    fee of $45.95 unless canceled. Members are free to <a href="#"
+                        class="form-legal-link">cancel</a> at any time. By subscribing you agree to the <a href="#"
+                        class="form-legal-link">Terms &amp; Conditions</a> and <a href="#"
+                        class="form-legal-link">Privacy Policy</a>.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
