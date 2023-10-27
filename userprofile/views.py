@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .serilizers import UserSerializer
 from .models import User
-import jwt, datetime
+# import jwt, datetime
 import requests
 import json
 

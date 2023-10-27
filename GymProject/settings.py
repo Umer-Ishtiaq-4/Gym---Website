@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'djoser',
+    # 'djoser',
     'rest_framework',
     'userprofile',
     'core',
@@ -145,23 +145,23 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-DJOSER = {
-    'SERIALIZERS': {
-        'user_create': 'userprofile.serilizers.CustomUserCreationSerializer',
-        'current_user': 'userprofile.serilizers.UserSerializer'
-    }
-}
+# DJOSER = {
+#     'SERIALIZERS': {
+#         'user_create': 'userprofile.serilizers.CustomUserCreationSerializer',
+#         'current_user': 'userprofile.serilizers.UserSerializer'
+#     }
+# }
 
 
-SIMPLE_JWT = {
-   'AUTH_HEADER_TYPES': ('JWT',),
-}
+# SIMPLE_JWT = {
+#    'AUTH_HEADER_TYPES': ('JWT',),
+# }
  
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
-}
+# REST_FRAMEWORK = {
+#     'DEFAULT_AUTHENTICATION_CLASSES': (
+#         'rest_framework_simplejwt.authentication.JWTAuthentication',
+#     ),
+# }
 AUTH_USER_MODEL = 'userprofile.User'
 
 
