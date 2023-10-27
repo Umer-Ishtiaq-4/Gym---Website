@@ -77,25 +77,25 @@ WSGI_APPLICATION = 'GymProject.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'railway',
-#         'USER': 'postgres',
-#         'PASSWORD': 'AA34+2eaCbD-dA5bdED+EdA*Fg-bEB*5',
-#         'HOST': 'roundhouse.proxy.rlwy.net',  # You can change this to your PostgreSQL server's host if it's not on localhost
-#         'PORT': '50092',  # You can specify the port if PostgreSQL is running on a non-default port
-#     }
-# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'gym_db',
-        'USER': 'root',
-        'PASSWORD': '7866',
-        'HOST': 'localhost',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'PASSWORD': 'AA34+2eaCbD-dA5bdED+EdA*Fg-bEB*5',
+        'HOST': 'roundhouse.proxy.rlwy.net',  # You can change this to your PostgreSQL server's host if it's not on localhost
+        'PORT': '50092',  # You can specify the port if PostgreSQL is running on a non-default port
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'gym_db',
+#         'USER': 'root',
+#         'PASSWORD': '7866',
+#         'HOST': 'localhost',
+#     }
+# }
 
 
 # Password validation
