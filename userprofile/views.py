@@ -1,5 +1,5 @@
 from rest_framework.views import APIView
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
 from django.contrib.auth import authenticate, login, logout
@@ -42,7 +42,7 @@ class RegisterView(CreateView):
         login(self.request, user)
         return super().form_valid(form)
     
-    @method_decorator(user_passes_test(is_admin, login_url='homePage'))
+    @method_decorator(user_passes_test(is_admin, login_url='login-page'))
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)
 
@@ -75,9 +75,9 @@ class LoginView(APIView):
         }
         return response
 
-    # @method_decorator(user_passes_test(is_admin, login_url='homePage'))
-    # def dispatch(self, *args, **kwargs):
-    #     return super().dispatch(*args, **kwargs)
+    @method_decorator(user_passes_test(is_admin, login_url='homePage'))
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
 
 class UserView(APIView):
     def get(self, request):
@@ -106,43 +106,51 @@ class LogoutView(APIView):
         }
         return response
     
+
 def loginView(request):
-    
     if request.method == 'POST':
-        if request.user == 'Anonymous':
-            print('Yes')
-        
-        email = request.POST.get('email')
+        username = request.POST.get('username')
         password = request.POST.get('password')
-        data = {
-            "email": email,
-            "password": password,
-        }
-        print(data)
-        login_url = 'http://127.0.0.1:8000/cred/login/'
-        response = requests.post(login_url, data=data)
-        res_content = response.json()
-        print(res_content)
-        if response.status_code == 200:
-            user = User.objects.get(email= email)
-            login(request, user)
-            return redirect('homePage')
+        # print(username, password)
+        user = authenticate(request, username=username, password=password)
+        # print(user)
+        if user is not None:
+            login(request, user)  # Log in the user
+            messages.success(request, 'Login successful.')
+            return redirect('homePage')  # Replace 'homePage' with your desired redirect URL
         else:
-            messages.error(request, res_content['detail'])
-            return render(request, 'auth/login.html')
+            messages.error(request, 'Login failed. Please check your email and password.')
     else:
-        # cookie = json.loads(request.COOKIES['sessionid'])
-        # if cookie:
-        #     print(cookie)
-        # else:
-        #     print("Session ID cookie not found.")
+        # If the user is already authenticated, log them out before showing the login page
+        if request.user.is_authenticated:
+            logout(request)
         return render(request, 'auth/login.html')
+
+    return render(request, 'auth/login.html')
     
 def logoutView(request):
-    logoutUrl = 'http://127.0.0.1:8000/cred/logout/'
-    response = requests.post(logoutUrl)
+    # logoutUrl = 'http://127.0.0.1:8000/cred/logout/'
+    # response = requests.post(logoutUrl)
     logout(request)
     return redirect('login-page')
+
+
+def registerView(request):
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            # messages.success(request, 'Registration successful. You are now logged in.')
+            return redirect('homePage')  # Replace 'homePage' with your desired redirect URL
+        else:
+            print(form.errors)
+            print("form validation failed")
+            messages.error(request, "There was an error registering the user! Try again ")
+    else:
+        form = CustomUserCreationForm()
+
+    return render(request, 'auth/register.html', {'form': form})
 
 # def reigsterView(request):
     
@@ -173,22 +181,4 @@ def logoutView(request):
 #     else:
 #         return render(request, 'auth/register.html')
 
-
-
-def registerView(request):
-    if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            # messages.success(request, 'Registration successful. You are now logged in.')
-            return redirect('homePage')  # Replace 'homePage' with your desired redirect URL
-        else:
-            print(form.errors)
-            print("form validation failed")
-            messages.error(request, "There was an error registering the user! Try again ")
-    else:
-        form = CustomUserCreationForm()
-
-    return render(request, 'auth/register.html', {'form': form})
 
